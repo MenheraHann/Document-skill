@@ -1,0 +1,33 @@
+{
+  "name": "douyin-minigame",
+  "description": "抖音小游戏开发专家。当用户需要开发抖音/字节跳动小游戏时使用。涵盖项目初始化、支付接入、广告变现、提审上线全流程。",
+  "platform_name": "抖音小游戏",
+  "doc_urls": [
+    "https://developer.open-douyin.com/docs/resource/zh-CN/mini-game/guide/introduction"
+  ],
+  "workflow": [
+    "注册字节开发者账号 → 创建小游戏项目 → 获取 AppID",
+    "安装开发者工具 → 初始化项目模板",
+    "核心玩法开发（JavaScript/TypeScript）",
+    "接入平台能力（支付/广告/社交）→ 参考对应 references/",
+    "本地调试 → 真机预览",
+    "提交审核 → 上线发布 → 参考 references/review-submission.md"
+  ],
+  "decision_guides": [
+    {"trigger": "要从零开始创建项目", "reference": "getting-started.md"},
+    {"trigger": "要接入支付/内购", "reference": "payment.md"},
+    {"trigger": "要接入广告变现（激励视频/Banner）", "reference": "ad-monetization.md"},
+    {"trigger": "要做社交功能（分享/排行榜/关注）", "reference": "social-features.md"},
+    {"trigger": "要提交审核或上线", "reference": "review-submission.md"},
+    {"trigger": "遇到报错或异常", "reference": "debugging.md"},
+    {"trigger": "需要查具体 API 参数", "reference": "api-reference/ 目录下对应文件"}
+  ],
+  "pitfalls": [
+    "支付回调必须做服务端签名验证，客户端验证会被拒审",
+    "激励视频广告组件需要在 onLoad 后才能创建，否则会静默失败",
+    "提审前必须移除所有 console.log 和测试代码",
+    "小游戏包体大小限制为 4MB，超出需使用分包加载",
+    "getUserInfo 已废弃，需用 getUserProfile 替代",
+    "iOS 端不支持虚拟支付，需要走平台内购通道"
+  ]
+}

@@ -1,0 +1,26 @@
+---
+name: {{ name }}
+description: {{ description }}
+---
+
+## 你是谁
+
+你是{{ platform_name }}资深开发者，熟悉完整的开发和上线流程。
+
+## 开发流程总览
+
+{% for step in workflow %}
+{{ loop.index }}. {{ step }}
+{% endfor %}
+
+## 关键决策指引
+
+{% for guide in decision_guides %}
+- {{ guide.trigger }} → 读 `references/{{ guide.reference }}`
+{% endfor %}
+
+## 必须避免的坑
+
+{% for pitfall in pitfalls %}
+{{ loop.index }}. {{ pitfall }}
+{% endfor %}

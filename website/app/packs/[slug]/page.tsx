@@ -2,23 +2,33 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import type { Metadata } from "next";
 
-const packData: Record<
-  string,
-  {
-    name: string;
-    description: string;
-    identity: string;
-    references: { file: string; label: string }[];
-    pitfalls: string[];
-    engines: string[];
-  }
-> = {
+interface VersionInfo {
+  version: string;
+  date: string;
+  tag: "latest" | "stable" | "legacy";
+  changes: string[];
+  downloadUrl: string;
+}
+
+interface PackInfo {
+  name: string;
+  description: string;
+  identity: string;
+  currentVersion: string;
+  references: { file: string; label: string }[];
+  pitfalls: string[];
+  engines: string[];
+  versions: VersionInfo[];
+}
+
+const packData: Record<string, PackInfo> = {
   "douyin-minigame": {
     name: "抖音小游戏开发专家",
     description:
       "涵盖项目创建、引擎接入、支付/广告变现、社交功能、提审上线全流程。让你的 Agent 精通从零开始到上架运营的每一个环节。",
     identity:
       "安装后，你的 Agent 将成为抖音小游戏资深开发者，精通从项目创建到上线运营的全流程——了解平台的每一个接口、每一个审核要求、每一个容易踩的坑。",
+    currentVersion: "1.2.0",
     references: [
       { file: "getting-started.md", label: "从零开始创建项目" },
       { file: "payment.md", label: "支付 / 内购（IAP）接入" },
@@ -46,6 +56,43 @@ const packData: Record<
       "Egret — 发布时选择字节跳动小游戏",
       "Unity — 通过 Unity 小游戏转换工具导出",
       "无引擎 — 手动打包（需含 project.config.json 和 game.json）",
+    ],
+    versions: [
+      {
+        version: "1.2.0",
+        date: "2026-03-25",
+        tag: "latest",
+        changes: [
+          "新增客服能力接入指南（IAP 必接）",
+          "新增敏感词过滤完整实现示例",
+          "修正广告初始化时机说明，适配多引擎场景",
+          "好友邀请改用分享+query 方案，移除错误的 navigateToMiniGame 示例",
+        ],
+        downloadUrl: "https://github.com/MenheraHann/Document-skill/archive/refs/tags/v1.2.0.zip",
+      },
+      {
+        version: "1.1.0",
+        date: "2026-03-20",
+        tag: "stable",
+        changes: [
+          "新增 Unity 小游戏转换工具接入说明",
+          "支付模块增加沙盒测试环境配置",
+          "补充 tt.requestSubscribeMessage 订阅消息 API",
+          "debugging.md 新增性能优化专区（纹理压缩/分包加载）",
+        ],
+        downloadUrl: "https://github.com/MenheraHann/Document-skill/archive/refs/tags/v1.1.0.zip",
+      },
+      {
+        version: "1.0.0",
+        date: "2026-03-15",
+        tag: "legacy",
+        changes: [
+          "首次发布",
+          "涵盖注册入驻、项目创建、开发环境、支付、广告、社交、提审全流程",
+          "包含 12 个参考文件，覆盖 5 大类 API",
+        ],
+        downloadUrl: "https://github.com/MenheraHann/Document-skill/archive/refs/tags/v1.0.0.zip",
+      },
     ],
   },
 };
@@ -232,6 +279,78 @@ export default async function PackDetailPage({
             </li>
           ))}
         </ul>
+      </section>
+
+      {/* Version history */}
+      <section className="mb-12">
+        <h2 className="text-xl font-bold mb-6">版本历史</h2>
+        <div className="space-y-4">
+          {pack.versions.map((v) => (
+            <div
+              key={v.version}
+              className={`p-5 rounded-xl border ${
+                v.tag === "latest"
+                  ? "border-blue-500/30 bg-blue-500/5"
+                  : "border-gray-800 bg-gray-900/50"
+              }`}
+            >
+              <div className="flex items-center gap-3 mb-3">
+                <span className="font-mono font-bold text-lg">
+                  v{v.version}
+                </span>
+                <span
+                  className={`px-2 py-0.5 rounded text-xs font-medium ${
+                    v.tag === "latest"
+                      ? "bg-blue-500/10 text-blue-400 border border-blue-500/20"
+                      : v.tag === "stable"
+                        ? "bg-green-500/10 text-green-400 border border-green-500/20"
+                        : "bg-gray-500/10 text-gray-400 border border-gray-500/20"
+                  }`}
+                >
+                  {v.tag}
+                </span>
+                <span className="text-sm text-gray-500 ml-auto">{v.date}</span>
+              </div>
+              <ul className="space-y-1.5 mb-4">
+                {v.changes.map((change) => (
+                  <li
+                    key={change}
+                    className="flex gap-2 text-sm text-gray-300"
+                  >
+                    <span className="text-gray-600 shrink-0">•</span>
+                    {change}
+                  </li>
+                ))}
+              </ul>
+              <a
+                href={v.downloadUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className={`inline-flex items-center gap-2 px-4 py-1.5 rounded-lg text-sm font-medium transition-all ${
+                  v.tag === "latest"
+                    ? "bg-blue-600 hover:bg-blue-500 text-white"
+                    : "bg-gray-800 hover:bg-gray-700 text-gray-300"
+                }`}
+              >
+                <svg
+                  width="14"
+                  height="14"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                >
+                  <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
+                  <polyline points="7 10 12 15 17 10" />
+                  <line x1="12" y1="15" x2="12" y2="3" />
+                </svg>
+                下载 v{v.version}
+              </a>
+            </div>
+          ))}
+        </div>
       </section>
 
       {/* Installation */}

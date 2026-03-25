@@ -22,10 +22,63 @@ interface PackInfo {
 }
 
 const packData: Record<string, PackInfo> = {
-  "douyin-minigame": {
-    name: "抖音小游戏开发专家",
+  "douyin-minigame-v2": {
+    name: "抖音小游戏开发专家 v2",
     description:
-      "涵盖项目创建、引擎接入、支付/广告变现、社交功能、提审上线全流程。让你的 Agent 精通从零开始到上架运营的每一个环节。",
+      "顾问式交互：先采访需求 → 生成定制计划 → 逐步门控推进 → 提审前自查。Agent 不再甩知识，而是像资深顾问一样一步步带你走。",
+    identity:
+      "安装后，你的 Agent 将成为抖音小游戏资深开发顾问——不会一上来就甩知识，而是先了解你的现状和需求，生成定制化计划，逐步门控推进，提审前还会帮你逐条自查。",
+    currentVersion: "2.0.0",
+    references: [
+      { file: "getting-started.md", label: "从零开始创建项目" },
+      { file: "payment.md", label: "支付 / 内购（IAP）接入" },
+      { file: "ad-monetization.md", label: "广告变现（激励视频/Banner/插屏）" },
+      { file: "social-features.md", label: "社交功能（分享/排行榜/邀请）" },
+      { file: "review-submission.md", label: "提交审核与上线发布 + 自查清单详解 + 接入计划模板" },
+      { file: "debugging.md", label: "调试与问题排查" },
+      { file: "api-reference/login-api.md", label: "登录 API 参考" },
+      { file: "api-reference/payment-api.md", label: "支付 API 参考" },
+      { file: "api-reference/ad-api.md", label: "广告 API 参考" },
+      { file: "api-reference/social-api.md", label: "社交 API 参考" },
+      { file: "api-reference/system-api.md", label: "系统 API 参考" },
+    ],
+    pitfalls: [
+      "Phase 1 采访不能跳过 — Agent 必须先问清现状再生成计划",
+      "门控条件必须确认 — 用户未确认当前阶段完成，禁止进入下一步",
+      "提审自查 10 项全过 — 任何一项未通过，禁止说「可以提审」",
+      "侧边栏必接 — 所有小游戏上线前必须接入侧边栏复访能力",
+      "内购必接客服 — 接入 IAP 的游戏必须同时接入客服能力",
+      "有输入必过滤 — 有用户自定义输入的游戏必须接入敏感词过滤 API",
+      "支付回调服务端验证 — 客户端验证会被拒审",
+      "包体限制 4MB — 超出需使用分包加载",
+    ],
+    engines: [
+      "Cocos Creator — 发布时选择「小游戏」平台",
+      "Laya — 发布时选择字节跳动小游戏",
+      "Egret — 发布时选择字节跳动小游戏",
+      "Unity — 通过 Unity 小游戏转换工具导出",
+      "无引擎 — 手动打包（需含 project.config.json 和 game.json）",
+    ],
+    versions: [
+      {
+        version: "2.0.0",
+        date: "2026-03-25",
+        tag: "latest",
+        changes: [
+          "全新顾问式交互：先采访需求，再生成定制计划",
+          "新增 5 种工作模式自动切换（新手引导/阶段跳入/问题排查/API查询/提审检查）",
+          "新增 Phase 1-4 四阶段流程（采访→计划→门控执行→提审自查）",
+          "新增提审自查清单详解（附录 A）和接入计划模板（附录 B）",
+          "SKILL.md 精简至 360 词，详细数据按需从 references 加载",
+        ],
+        downloadUrl: "https://github.com/MenheraHann/Document-skill/archive/refs/tags/v2.0.0.zip",
+      },
+    ],
+  },
+  "douyin-minigame-v1": {
+    name: "抖音小游戏开发专家 v1",
+    description:
+      "百科全书式：涵盖项目创建、引擎接入、支付/广告变现、社交功能、提审上线全流程。一次性给 Agent 所有知识，让它精通每一个细节。",
     identity:
       "安装后，你的 Agent 将成为抖音小游戏资深开发者，精通从项目创建到上线运营的全流程——了解平台的每一个接口、每一个审核要求、每一个容易踩的坑。",
     currentVersion: "1.2.0",
@@ -39,6 +92,8 @@ const packData: Record<string, PackInfo> = {
       { file: "api-reference/login-api.md", label: "登录 API 参考" },
       { file: "api-reference/payment-api.md", label: "支付 API 参考" },
       { file: "api-reference/ad-api.md", label: "广告 API 参考" },
+      { file: "api-reference/social-api.md", label: "社交 API 参考" },
+      { file: "api-reference/system-api.md", label: "系统 API 参考" },
     ],
     pitfalls: [
       "侧边栏必接 — 所有小游戏上线前必须接入侧边栏复访能力，否则审核必挂",
@@ -368,18 +423,18 @@ export default async function PackDetailPage({
             <p className="text-sm text-gray-400 mb-3">
               下载整个仓库的 ZIP，解压后将{" "}
               <code className="px-1.5 py-0.5 rounded bg-gray-800 text-gray-300 text-xs">
-                packs/douyin-minigame/
+                packs/{slug}/
               </code>{" "}
               目录复制到你的项目中。
             </p>
             <div className="bg-gray-950 rounded-lg p-4 font-mono text-sm text-gray-300">
               <p className="text-gray-500"># 复制到 Claude Code 的 skills 目录</p>
               <p>
-                cp -r packs/douyin-minigame/ your-project/.claude/skills/douyin-minigame/
+                cp -r packs/{slug}/ your-project/.claude/skills/{slug}/
               </p>
               <p className="text-gray-500 mt-3"># 或者 Cursor 的 skills 目录</p>
               <p>
-                cp -r packs/douyin-minigame/ your-project/.cursor/skills/douyin-minigame/
+                cp -r packs/{slug}/ your-project/.cursor/skills/{slug}/
               </p>
             </div>
           </div>
@@ -393,7 +448,7 @@ export default async function PackDetailPage({
               <h3 className="font-semibold">方式二：CLI 一键安装</h3>
             </div>
             <div className="bg-gray-950 rounded-lg p-4 font-mono text-sm text-gray-400">
-              <p>npx agent-skills add owner/douyin-minigame</p>
+              <p>npx agent-skills add owner/{slug}</p>
             </div>
             <p className="text-xs text-gray-500 mt-2">CLI 工具正在开发中</p>
           </div>
@@ -406,8 +461,8 @@ export default async function PackDetailPage({
               <p>git clone https://github.com/your-org/agent-skills.git</p>
               <p>cd agent-skills</p>
               <p>
-                cp -r packs/douyin-minigame/
-                ~/your-project/.claude/skills/douyin-minigame/
+                cp -r packs/{slug}/
+                ~/your-project/.claude/skills/{slug}/
               </p>
             </div>
           </div>

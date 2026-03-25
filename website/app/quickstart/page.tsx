@@ -29,7 +29,7 @@ export default function QuickstartPage() {
             从 GitHub 仓库下载你需要的知识包。目前可用的知识包：
           </p>
           <Link
-            href="/packs/douyin-minigame"
+            href="/packs/douyin-minigame-v2"
             className="inline-flex items-center gap-2 text-blue-400 hover:text-blue-300 text-sm"
           >
             <svg
@@ -44,7 +44,7 @@ export default function QuickstartPage() {
             >
               <path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1 0-5H20" />
             </svg>
-            抖音小游戏开发专家
+            抖音小游戏开发专家 v2（推荐）
             <svg
               width="14"
               height="14"
@@ -84,7 +84,7 @@ export default function QuickstartPage() {
                 <p className="text-gray-500"># 在 agent-skills 仓库目录内执行，将知识包复制到你的项目</p>
                 <p>mkdir -p ~/your-project/.claude/skills</p>
                 <p>
-                  cp -r packs/douyin-minigame/ ~/your-project/.claude/skills/douyin-minigame/
+                  cp -r packs/douyin-minigame-v2/ ~/your-project/.claude/skills/douyin-minigame-v2/
                 </p>
               </div>
             </div>
@@ -95,8 +95,8 @@ export default function QuickstartPage() {
                 <p className="text-gray-500"># 在 agent-skills 仓库目录内执行，将知识包复制到你的项目</p>
                 <p>mkdir -p ~/your-project/.cursor/skills</p>
                 <p>
-                  cp -r packs/douyin-minigame/
-                  ~/your-project/.cursor/skills/douyin-minigame/
+                  cp -r packs/douyin-minigame-v2/
+                  ~/your-project/.cursor/skills/douyin-minigame-v2/
                 </p>
               </div>
             </div>
@@ -107,7 +107,7 @@ export default function QuickstartPage() {
               <span className="font-semibold text-yellow-400">目录结构</span>
               ：确保最终结构为{" "}
               <code className="px-1.5 py-0.5 rounded bg-gray-800 text-xs">
-                .claude/skills/douyin-minigame/SKILL.md
+                .claude/skills/douyin-minigame-v2/SKILL.md
               </code>{" "}
               ，SKILL.md 文件是知识包的入口。
             </p>

@@ -2,12 +2,20 @@ import Link from "next/link";
 
 const packs = [
   {
-    slug: "douyin-minigame",
-    name: "抖音小游戏开发专家",
+    slug: "douyin-minigame-v2",
+    name: "抖音小游戏开发专家 v2",
     description:
-      "涵盖项目创建、引擎接入、支付/广告变现、社交功能、提审上线全流程。让你的 Agent 精通抖音小游戏开发的每一个细节。",
+      "顾问式交互：先采访需求 → 生成定制计划 → 逐步门控推进 → 提审前自查。Agent 不再甩知识，而是像资深顾问一样一步步带你走。",
+    tags: ["抖音", "小游戏", "变现", "顾问式", "门控推进"],
+    fileCount: 12,
+  },
+  {
+    slug: "douyin-minigame-v1",
+    name: "抖音小游戏开发专家 v1",
+    description:
+      "百科全书式：涵盖项目创建、引擎接入、支付/广告变现、社交功能、提审上线全流程。一次性给 Agent 所有知识。",
     tags: ["抖音", "小游戏", "变现", "Cocos", "Unity"],
-    fileCount: 9,
+    fileCount: 12,
   },
 ];
 
